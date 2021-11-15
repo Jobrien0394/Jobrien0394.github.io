@@ -1,5 +1,3 @@
-# Kenzie Academy JavaScript Assignment
+👋Hello, welcome to my Jeopardy Trivia Project!👋
 
-Complete your work inside of `code.js`
-
-Follow the instructions provided on my.kenzie.academy for this assignment.
+To play, simply type in Jobrien0394.github.io and you're in.
