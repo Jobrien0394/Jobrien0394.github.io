@@ -39,7 +39,16 @@ body{
 }
 
 h1, p {
-    font-size: 2em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: crimson;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.score-count {
+    font-size: 1.5em;
     font-weight: bold;
     color: white;
     text-align: center;
@@ -48,8 +57,8 @@ h1, p {
 
 /* my hover effect for my next question button */
 .hover {
-    width: 500px;
-    height: 100px;
+    width: 15rem;
+    height: 4rem;
     border: none;
     outline: none;
     color: #fff;
@@ -58,8 +67,8 @@ h1, p {
     position: relative;
     z-index: 0;
     border-radius: 10px;
-    top:150px;
-    left: 500px;
+    top: 2rem;
+    right: 20rem;
 }
 
 .hover:before {
@@ -110,4 +119,38 @@ h1, p {
 }
 /* ---------------------------------------------*/
 
+#buttons {
+    text-align: center;
+    margin-top: 5rem;
+    margin-left: 40rem;
+}
 
+#reset.button {
+    width: 15rem;
+    height: 4rem;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    top:2rem;
+    right: 20rem;
+}
+
+#newCategory {
+    width: 15rem;
+    height: 4rem;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    top:2rem;
+    right: 20rem;
+}

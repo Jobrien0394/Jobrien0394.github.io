@@ -3,3 +3,14 @@ GET http://jservice.kenzie.academy/api/random-clue?valid=true
 GET https://jservice.kenzie.academy/api/categories
 ###
 GET https://jservice.kenzie.academy/api/clues?category=13041
+###
+POST https://jservice.kenzie.academy/api/categories
+
+content-type: application/json
+
+{
+  "id": "40951",
+  "title": "Random Questions",
+  "canon": false
+}
+###
