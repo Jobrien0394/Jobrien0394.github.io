@@ -13,29 +13,74 @@
     <meta name="keywords" content="Kenzie" />
 
     <!-- Title Page-->
-    <title>Capstone Trivia Quiz Project</title>
+    <title>Jeopardy Trivia Quiz Project</title>
     
     <!-- CSS-->
     <link href="style.css" rel="stylesheet" media="all" />
   </head>
   
   <body>
-    <h1>👋Welcome To My Trivia App! Enjoy!🎮</h1>
+    <!-- https://www.myinstants.com/search/?name=jeopardy -->
+    <audio src="./music/jeopardy-intro.mp3" controls>
+      <p>Opening Jeopardy Theme</p>
+    </audio>
+    <h1>👋Welcome To My Trivia App! Enjoy!🎮</h1> 
+    <p class="score">Score: $<span class="score-count"></span></p>
     
-    <p class="score">Score <span class="score-count"></span></p>
     <div id="message" style="color:gold"></div>
+    
+    <div id="categories">
+      <div id="category1" class="category">Category1</div>
+      <div id="category2" class="category">Category2</div> 
+      <div id="category3" class="category">Category3</div> 
+      <div id="category4" class="category">Category4</div> 
+      <div id="category5" class="category">Category5</div> 
+      <div id="category6" class="category">Category6</div>
+    </div>
+    
+    <div id="buttons1"> 
+      <button id = "value0" class="value">$200</button> 
+      <button id = "value1" class="value">$200</button> 
+      <button id = "value2" class="value">$200</button> 
+      <button id = "value3" class="value">$200</button> 
+      <button id = "value4" class="value">$200</button>
+      <button id = "value5" class="value">$200</button>
+    </div>
+      
+    <div id="buttons2"> 
+    <button id = "value6" class="value">$400</button> 
+    <button id = "value7" class="value">$400</button> 
+    <button id = "value8" class="value">$400</button> 
+    <button id = "value9" class="value">$400</button> 
+    <button id = "value10" class="value">$400</button>
+    <button id = "value11" class="value">$400</button>
+    </div>
 
-      <form id="form" class="quiz"> 
-        <div id="category-container"><!-- categories get injected here--></div>
-        <div id="clue-container"><!-- clue gets injected here --> </div>
-        <br>
-      What is? <input type="text" id="user-answer" />
-      <button id="submit" class="pulse">Submit</button>
-    </form>
-    <div id="buttons">
-    <button id="newCategory" class="categoryButton">New Category</button>
-    <button id="reset" class="button">Reset</button>
-    <button id="nextQuestion" class="hover">Next Question</button>
+    <div id="buttons3"> 
+    <button id = "value12" class="value">$600</button> 
+    <button id = "value13" class="value">$600</button> 
+    <button id = "value14" class="value">$600</button> 
+    <button id = "value15" class="value">$600</button> 
+    <button id = "value16" class="value">$600</button>
+    <button id = "value17" class="value">$600</button>
+    </div>
+
+    <div id="buttons4"> 
+    <button id = "value18" class="value">$800</button> 
+    <button id = "value19" class="value">$800</button> 
+    <button id = "value20" class="value">$800</button> 
+    <button id = "value21" class="value">$800</button> 
+    <button id = "value22" class="value">$800</button>
+    <button id = "value23" class="value">$800</button>
+    </div>
+
+    <div id="buttons5">
+    <button id = "value24" class="value">$1000</button> 
+    <button id = "value25" class="value">$1000</button> 
+    <button id = "value26" class="value">$1000</button> 
+    <button id = "value27" class="value">$1000</button> 
+    <button id = "value28" class="value">$1000</button>
+    <button id = "value29" class="value">$1000</button>
     </div>
     <h3>
       
@@ -43,4 +88,4 @@
     <script src="code.js"></script>
     </div>
   </body>
-</html>
+  </html>

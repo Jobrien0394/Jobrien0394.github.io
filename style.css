@@ -1,156 +1,70 @@
-/* Write your CSS Here. */
-form {
-    margin: 0 auto;
-    width: 400px;
-    padding: 1em;
-    border: 1px solid #CCC;
-    border-radius: 1em;
-    background-color: darkred;
-    color: white;
-    position: relative;
-    top: 100px;
-    display: block;
-}
-
-body{
-    background: url('https://media.istockphoto.com/vectors/trivia-game-or-quiz-show-background-with-light-bulbs-vector-id1138252076?k=6&m=1138252076&s=612x612&w=0&h=pESrsKyQTOayihUISuaVZ9gVbcbM0VMnPbaka1neuOI=');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-}
-
-#clue-container {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    margin-top: 1em;
-    display:flex
-}
-
-#category-container {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    margin-top: 1em;
-    display:flex
-}
-
-h1, p {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: crimson;
-    text-align: center;
-    margin-top: 1em;
-}
-
-.score-count {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    margin-top: 1em;
-}
-
-/* my hover effect for my next question button */
-.hover {
-    width: 15rem;
-    height: 4rem;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-    top: 2rem;
-    right: 20rem;
-}
-
-.hover:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -2px;
-    left:-2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing 20s linear infinite;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    border-radius: 10px;
-}
-
-.hover:active {
-    color: #000
-}
-
-.hover:active:after {
-    background: transparent;
-}
-
-.hover:hover:before {
-    opacity: 1;
-}
-
-.hover:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
+#categories {
     width: 100%;
-    height: 100%;
-    background: #111;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px solid dodgerblue;
+    font-size: 1.5em;
 }
 
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-/* ---------------------------------------------*/
-
-#buttons {
+.category { 
+    width:100%;
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    background-color: dodgerblue;
+    color: gold;
+    align-content: center;
+    align-items: center;
     text-align: center;
-    margin-top: 5rem;
-    margin-left: 40rem;
+    font-size: 1.5em;
+    border: 2px dashed gold;
 }
 
-#reset.button {
-    width: 15rem;
-    height: 4rem;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-    top:2rem;
-    right: 20rem;
+.value {
+    width:13rem;
+    height: 7rem;
+    display: block;
+    flex-direction: row;
+    justify-content: center;
+    background-color: dodgerblue;
+    color: gold;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5em;
+}
+#buttons1, #buttons2, #buttons3, #buttons4, #buttons5 {
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    border: 1px dashed gold;
+    font-size: 1.5em;
 }
 
-#newCategory {
-    width: 15rem;
-    height: 4rem;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-    top:2rem;
-    right: 20rem;
+h1 {
+    font-family: 'fantasy', Charcoal, sans-serif;
+    font-weight: 100;
+    font-size: 2em;
+    color: gold;
+}
+
+body {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+    text-align: center;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <meta name="description" content="Kenzie" />
+    <meta name="author" content="Kenzie" />
+    <meta name="keywords" content="Kenzie" />
+
+    <!-- Title Page-->
+    <title>Jeopardy Trivia Quiz Project</title>
+    
+    <!-- CSS-->
+    <link href="style.css" rel="stylesheet" media="all" />
+  </head>
+  
+  <body>
+    <!-- https://www.myinstants.com/search/?name=jeopardy -->
+    <audio src="./music/jeopardy-board-fill-sound-2016-present-cleaner-version.mp3" controls>
+      <p>Jeopardy Board Fill Theme</p>
+    </audio>
+    <h1>👋Welcome To My Trivia App! Enjoy!🎮</h1>
+    
+    <div id="message" style="color:gold"></div>
+    
+    <table  id="categories" border="1" width="1600" height="900"><!-- categories get injected here-->
+      <tr>
+        <td id="category1">Category1</td><td id="category2">Category2</td><td id="category3">Category3</td><td id="category4">Category4</td><td id="category5">Category5</td><td id="category6">Category6</td>
+      </tr>
+      <tr>
+        <td ><a id="value" href="./code.js"></a>$100</td> <td ><a id="value" href="./questions"></a>$100</td> <td ><a id="value" href="./questions"></a>$100</td> <td ><a id="value" href="./questions"></a>$100</td> <td ><a id="value" href="./questions"></a>$100</td> <td ><a id="value" href="./questions"></a>$100</td>
+      </tr>
+      <tr>
+        <td ><a id="value" href="./question1"></a>$200</td> <td ><a id="value" href="./question1"></a>$200</td> <td ><a id="value" href="./question1"></a>$200</td> <td ><a id="value" href="./question1"></a>$200</td> <td ><a id="value" href="./question1"></a>$200</td> <td ><a id="value" href="./question1"></a>$200</td>
+      </tr>
+      <tr>
+        <td ><a id="value" href="./question1"></a>$300</td> <td><a id="value" href="./question1"></a>$300</td> <td ><a id="value" href="./question1"></a>$300</td> <td ><a id="value" href="./question1"></a>$300</td> <td ><a id="value" href="./question1"></a>$300</td> <td ><a id="value" href="./question1"></a>$300</td>
+      </tr>
+      <tr>
+        <td ><a id="value" href="./question1"></a>$400</td> <td id="$400">$400</td> <td ><a id="value" href="./question1"></a>$400</td> <td id="$400">$400</td> <td ><a id="value" href="./question1"></a>$400</td> <td ><a id="value" href="./question1"></a>$400</td>
+      </tr>
+      <tr>
+        <td id="$500">$500</td> <td id="$500">$500</td> <td id="$500">$500</td> <td id="$500">$500</td> <td id="$500">$500</td> <td id="$500">$500</td>
+      </tr>
+    </table>
+    <p class="score">Score <span class="score-count"></span></p>
+    <div id="buttons">
+      <button id="newCategories" class="categoryButton">New Categories</button>
+      <button id="reset" class="button">Reset</button>
+    </div>
+    <h3>
+      
+    </h3>
+    <script src="code.js"></script>
+    </div>
+  </body>
+  </html>
