@@ -82,8 +82,6 @@ let message = document.getElementById('message')
 
 
 // My Eventhandlers
-document.getElementById('reset').addEventListener('click', resetGame)
-
 document.getElementById('value0').addEventListener('click',() => {
     document.getElementById('value0').style.visibility = 'hidden'
     userInput = prompt(`Question: ${categories[0].clues[0].question}`)
