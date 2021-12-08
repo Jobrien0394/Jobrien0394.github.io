@@ -56,20 +56,12 @@ Promise.all([
 
         scoreCount.innerHTML = score
 
-// My reset game function
-function resetGame() {
-    window.location.reload()
-}
 
 let message = document.getElementById('message')
 
 // My scorekeeper function
     function scoreKeeper() {
-        if (userInput === answer) {
-            score += value
-            message.innerHTML= 'correct!'
-        }
-        else if (userInput.toLowerCase().trim() === answer.toLowerCase()) {
+        if (userInput.toLowerCase().trim() === answer.toLowerCase()) {
             score += value
             message.innerHTML= 'correct!'
         }
