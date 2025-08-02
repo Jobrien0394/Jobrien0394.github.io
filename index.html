@@ -1,201 +1,196 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Jeopardy Game</title>
+  <title>Jeopardy Game</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #02075d;
+      font-family: Arial, sans-serif;
+      background-color: #001f3f;
       color: white;
+      text-align: center;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
     h1 {
       margin: 1rem 0;
     }
-    #game-setup, #scoreboard, #game-board, #final-jeopardy, #question-modal {
-      max-width: 1000px;
-      width: 100%;
-      margin-bottom: 2rem;
-    }
-    #game-setup input, button {
-      font-size: 1rem;
-      padding: 0.5rem;
-      margin-right: 1rem;
-    }
-    #game-board {
+    #gameBoard {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 2px;
-      background: #000;
+      gap: 5px;
+      margin: 2rem;
     }
-    .category, .question {
-      background: #060ce9;
+    .category {
+      background-color: #0074D9;
       padding: 1rem;
-      text-align: center;
-      border: 1px solid #000;
+      font-weight: bold;
+      border: 1px solid #fff;
+    }
+    .question {
+      background-color: #39CCCC;
+      padding: 1rem;
       cursor: pointer;
+      border: 1px solid #fff;
     }
-    .question.used {
-      background: #444;
-      cursor: default;
-    }
-    #scoreboard {
-      display: flex;
-      justify-content: space-around;
-      gap: 1rem;
-    }
-    .player-score {
-      background: #111;
-      padding: 1rem;
-      border-radius: 10px;
-    }
-    #question-modal {
+    .modal {
       display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      color: black;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background-color: #fff;
+      color: #000;
       padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
-      z-index: 1000;
+      max-width: 500px;
+      width: 90%;
+      text-align: left;
     }
-    #question-modal input {
-      width: 100%;
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin: 1rem 0;
+    #playersContainer {
+      margin: 1rem;
     }
-    #overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 999;
+    .player {
+      margin: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <h1>Kickass Jeopardy</h1>  <div id="game-setup">
-    <label for="numPlayers">How many players?</label>
-    <input type="number" id="numPlayers" min="1" max="4" value="2">
-    <button onclick="startGame()">Start Game</button>
-  </div>  <div id="scoreboard"></div>  <div id="game-board"></div>  <div id="overlay"></div>
-  <div id="question-modal">
-    <h2 id="question-text"></h2>
-    <input type="text" id="player-answer" placeholder="Type your answer here">
-    <button onclick="submitAnswer()">Submit</button>
+  <h1>Jeopardy</h1>
+  <div id="playersContainer"></div>
+  <div id="gameBoard"></div>  <div class="modal" id="questionModal">
+    <div class="modal-content">
+      <h2 id="modalCategory"></h2>
+      <p id="modalQuestion"></p>
+      <input type="text" id="modalAnswer" placeholder="Your answer here" />
+      <button onclick="submitAnswer()">Submit</button>
+    </div>
   </div>  <script>
     const categories = [
-      "Science", "History", "Literature", "Pop Culture", "Geography", "Sports"
+      "History", "Science", "Movies", "Music", "Geography", "Literature"
     ];
 
     const questions = {
-      "Science": {
-        100: { q: "What planet is known as the Red Planet?", a: "Mars" },
-        200: { q: "What gas do plants breathe in?", a: "Carbon Dioxide" },
-        300: { q: "What is the powerhouse of the cell?", a: "Mitochondria" }
-      },
       "History": {
-        100: { q: "Who was the first President of the United States?", a: "George Washington" },
-        200: { q: "What year did WW2 end?", a: "1945" },
-        300: { q: "Who was known as the Maid of Orleans?", a: "Joan of Arc" }
+        100: { question: "Who was the first President of the United States?", answer: "George Washington" },
+        200: { question: "In what year did WW2 end?", answer: "1945" },
+        300: { question: "Which wall came down in 1989?", answer: "Berlin Wall" },
       },
-      // ... same structure for other categories ...
+      "Science": {
+        100: { question: "What planet is known as the Red Planet?", answer: "Mars" },
+        200: { question: "What gas do plants breathe in?", answer: "Carbon Dioxide" },
+        300: { question: "What is the powerhouse of the cell?", answer: "Mitochondria" },
+      },
+      "Movies": {
+        100: { question: "Who directed 'Jaws'?", answer: "Steven Spielberg" },
+        200: { question: "What movie features the quote 'I'll be back'?", answer: "The Terminator" },
+        300: { question: "What 1994 movie starred Tim Robbins and Morgan Freeman?", answer: "The Shawshank Redemption" },
+      },
+      "Music": {
+        100: { question: "Who is the King of Pop?", answer: "Michael Jackson" },
+        200: { question: "Which band released 'Bohemian Rhapsody'?", answer: "Queen" },
+        300: { question: "Who sang 'Rolling in the Deep'?", answer: "Adele" },
+      },
+      "Geography": {
+        100: { question: "What is the capital of France?", answer: "Paris" },
+        200: { question: "Which U.S. state has the most islands?", answer: "Alaska" },
+        300: { question: "What river runs through Egypt?", answer: "Nile" },
+      },
+      "Literature": {
+        100: { question: "Who wrote 'Romeo and Juliet'?", answer: "William Shakespeare" },
+        200: { question: "What is the name of the wizarding school in Harry Potter?", answer: "Hogwarts" },
+        300: { question: "Who wrote 'The Great Gatsby'?", answer: "F. Scott Fitzgerald" },
+      },
     };
 
-    let players = [];
-    let currentPlayer = 0;
     let currentQuestion = null;
-    let currentValue = 0;
+    let currentPoints = 0;
+    let players = [];
+    let currentPlayerIndex = 0;
 
-    function startGame() {
-      const numPlayers = parseInt(document.getElementById('numPlayers').value);
+    function setupPlayers() {
+      const numPlayers = prompt("How many players? (1–4)");
+      const container = document.getElementById("playersContainer");
+      container.innerHTML = "";
       players = [];
-      for (let i = 0; i < numPlayers; i++) {
-        players.push({ name: `Player ${i + 1}`, score: 0 });
+
+      for (let i = 0; i < parseInt(numPlayers); i++) {
+        const name = prompt(`Enter name for Player ${i + 1}`);
+        players.push({ name, score: 0 });
+        const div = document.createElement("div");
+        div.classList.add("player");
+        div.id = `player-${i}`;
+        container.appendChild(div);
       }
-      renderScoreboard();
-      renderBoard();
-      document.getElementById('game-setup').style.display = 'none';
+      updateScoreboard();
     }
 
-    function renderScoreboard() {
-      const sb = document.getElementById('scoreboard');
-      sb.innerHTML = '';
-      players.forEach((p, i) => {
-        const div = document.createElement('div');
-        div.className = 'player-score';
-        div.innerHTML = `<strong>${p.name}</strong><br>Score: ${p.score}`;
-        if (i === currentPlayer) div.style.border = '2px solid yellow';
-        sb.appendChild(div);
+    function updateScoreboard() {
+      players.forEach((player, index) => {
+        const playerDiv = document.getElementById(`player-${index}`);
+        playerDiv.innerText = `${player.name}: $${player.score}` + (index === currentPlayerIndex ? " ← Your Turn" : "");
       });
     }
 
-    function renderBoard() {
-      const board = document.getElementById('game-board');
-      board.innerHTML = '';
+    function buildBoard() {
+      const board = document.getElementById("gameBoard");
+      board.innerHTML = "";
 
-      categories.forEach(cat => {
-        const cell = document.createElement('div');
-        cell.className = 'category';
-        cell.textContent = cat;
-        board.appendChild(cell);
+      // Add category headers
+      categories.forEach(category => {
+        const div = document.createElement("div");
+        div.classList.add("category");
+        div.innerText = category;
+        board.appendChild(div);
       });
 
-      [100, 200, 300].forEach(value => {
-        categories.forEach(cat => {
-          const q = document.createElement('div');
-          q.className = 'question';
-          q.textContent = `$${value}`;
-          q.onclick = () => handleQuestion(cat, value, q);
-          board.appendChild(q);
+      // Add question cells
+      [100, 200, 300].forEach(points => {
+        categories.forEach(category => {
+          const cell = document.createElement("div");
+          cell.classList.add("question");
+          cell.innerText = `$${points}`;
+          cell.onclick = () => openQuestion(category, points);
+          board.appendChild(cell);
         });
       });
     }
 
-    function handleQuestion(cat, value, cell) {
-      if (cell.classList.contains('used')) return;
-      currentQuestion = questions[cat][value];
-      currentValue = value;
-      cell.classList.add('used');
-
-      document.getElementById('question-text').textContent = currentQuestion.q;
-      document.getElementById('player-answer').value = '';
-
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('question-modal').style.display = 'block';
+    function openQuestion(category, points) {
+      currentQuestion = questions[category][points];
+      currentPoints = points;
+      document.getElementById("modalCategory").innerText = `${category} - $${points}`;
+      document.getElementById("modalQuestion").innerText = currentQuestion.question;
+      document.getElementById("modalAnswer").value = "";
+      document.getElementById("questionModal").style.display = "flex";
     }
 
     function submitAnswer() {
-      const answer = document.getElementById('player-answer').value.trim().toLowerCase();
-      const correct = currentQuestion.a.trim().toLowerCase();
-      const isCorrect = answer === correct;
+      const answer = document.getElementById("modalAnswer").value.trim().toLowerCase();
+      const correctAnswer = currentQuestion.answer.toLowerCase();
+      const player = players[currentPlayerIndex];
 
-      if (isCorrect) {
-        players[currentPlayer].score += currentValue;
+      if (answer === correctAnswer) {
+        player.score += currentPoints;
         alert("Correct!");
       } else {
-        players[currentPlayer].score -= currentValue;
-        alert(`Wrong! Correct answer was: ${currentQuestion.a}`);
+        player.score -= currentPoints;
+        alert(`Incorrect. The correct answer was: ${currentQuestion.answer}`);
       }
 
-      currentPlayer = (currentPlayer + 1) % players.length;
-      renderScoreboard();
-
-      document.getElementById('overlay').style.display = 'none';
-      document.getElementById('question-modal').style.display = 'none';
+      document.getElementById("questionModal").style.display = "none";
+      currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+      updateScoreboard();
     }
+
+    window.onload = () => {
+      setupPlayers();
+      buildBoard();
+    };
   </script></body>
 </html>
