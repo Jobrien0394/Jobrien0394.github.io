@@ -1,98 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <title>Jeopardy Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #001f3f;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+    .cell {
+      background-color: #0074D9;
+      border: 2px solid #fff;
+      padding: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .category {
+      background-color: #3D9970;
+      font-size: 1rem;
+    }
+    .controls, .players, .final {
+      margin: 1rem 0;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin: 0.3rem;
+      cursor: pointer;
+    }
+    .score {
+      margin: 0.5rem 0;
+    }
+    .player-container {
+      margin-bottom: 1rem;
+    }
+    input[type=number] {
+      width: 60px;
+      font-size: 1rem;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Jeopardy!</h1>
 
-    <meta name="description" content="Kenzie" />
-    <meta name="author" content="Kenzie" />
-    <meta name="keywords" content="Kenzie" />
+  <div class="controls">
+    <label for="playerCount">Number of Players (1–4):</label>
+    <input type="number" id="playerCount" min="1" max="4" value="2">
+    <button onclick="startGame()">Start Game</button>
+  </div>
 
-    <!-- Title Page-->
-    <title>Jeopardy Trivia Quiz Project</title>
-    
-    <!-- CSS-->
-    <link href="style.css" rel="stylesheet" media="all" />
-  </head>
-  
-  <body>
-    <!-- https://www.myinstants.com/search/?name=jeopardy -->
-    <audio src="./music/jeopardy-intro.mp3" controls>
-      <p>Opening Jeopardy Theme</p>
-    </audio>
-    <h1>👋Welcome To My Trivia App! Enjoy!🎮</h1> 
-    <p class="score">Score: $<span class="score-count"></span></p>
-    
-    <div id="message" style="color:gold"></div>
-    
+  <div class="players" id="players"></div>
 
-      <div class="result">
-        <p class="result_correct-answer">
-        The correct answer is: <span class="correct-answer"></span>
-      </p>
-      </div>
+  <div class="controls hidden" id="gameControls">
+    <button onclick="generateBoard(false)">New Board</button>
+    <button onclick="generateBoard(true)">Double Jeopardy</button>
+    <button onclick="prepareFinalJeopardy()">Final Jeopardy</button>
+  </div>
 
-    <div id="categories">
-      <div id="category1" class="category">Category1</div>
-      <div id="category2" class="category">Category2</div> 
-      <div id="category3" class="category">Category3</div> 
-      <div id="category4" class="category">Category4</div> 
-      <div id="category5" class="category">Category5</div> 
-      <div id="category6" class="category">Category6</div>
-    </div>
-    
-    <div id="buttons1"> 
-      <button id = "value0" class="value">$200</button> 
-      <button id = "value1" class="value">$200</button> 
-      <button id = "value2" class="value">$200</button> 
-      <button id = "value3" class="value">$200</button> 
-      <button id = "value4" class="value">$200</button>
-      <button id = "value5" class="value">$200</button>
-    </div>
-      
-    <div id="buttons2"> 
-    <button id = "value6" class="value">$400</button> 
-    <button id = "value7" class="value">$400</button> 
-    <button id = "value8" class="value">$400</button> 
-    <button id = "value9" class="value">$400</button> 
-    <button id = "value10" class="value">$400</button>
-    <button id = "value11" class="value">$400</button>
-    </div>
+  <div class="board" id="board"></div>
 
-    <div id="buttons3"> 
-    <button id = "value12" class="value">$600</button> 
-    <button id = "value13" class="value">$600</button> 
-    <button id = "value14" class="value">$600</button> 
-    <button id = "value15" class="value">$600</button> 
-    <button id = "value16" class="value">$600</button>
-    <button id = "value17" class="value">$600</button>
-    </div>
+  <div class="final hidden" id="finalSection">
+    <h2>Final Jeopardy</h2>
+    <div id="wagerInputs"></div>
+    <button onclick="revealFinalClue()">Reveal Final Clue</button>
+    <div id="finalClue" class="hidden"></div>
+  </div>
 
-    <div id="buttons4"> 
-    <button id = "value18" class="value">$800</button> 
-    <button id = "value19" class="value">$800</button> 
-    <button id = "value20" class="value">$800</button> 
-    <button id = "value21" class="value">$800</button> 
-    <button id = "value22" class="value">$800</button>
-    <button id = "value23" class="value">$800</button>
-    </div>
+  <script>
+    const allCategories = [
+      "U.S. Presidents", "World History", "Science", "Literature", "Pop Culture",
+      "Sports", "Geography", "Word Origins", "Movies", "TV Shows", "Animals",
+      "Mythology", "Music", "Food & Drink", "Famous Quotes", "Inventions",
+      "Technology", "Art", "Business", "Mathematics", "Politics", "Language",
+      "The Bible", "Astronomy", "Comics", "Fashion", "Video Games", "Opera", "Economics"
+    ];
 
-    <div id="buttons5">
-    <button id = "value24" class="value">$1000</button> 
-    <button id = "value25" class="value">$1000</button> 
-    <button id = "value26" class="value">$1000</button> 
-    <button id = "value27" class="value">$1000</button> 
-    <button id = "value28" class="value">$1000</button>
-    <button id = "value29" class="value">$1000</button>
-    </div>
-    <h3>
-      
-    </h3>
-    <script defer src="code.js"></script>
-    </div>
-  </body>
-  </html>
+    let players = [];
+    let scores = {};
+    let dailyDouble = "";
+    let finalCategory = "";
+    let finalClue = "";
+
+    function getRandomCategories(list, count) {
+      const shuffled = [...list].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
+    }
+
+    function startGame() {
+      const count = parseInt(document.getElementById('playerCount').value);
+      if (count < 1 || count > 4) return alert("Choose between 1 and 4 players.");
+
+      const playersDiv = document.getElementById('players');
+      playersDiv.innerHTML = "";
+      players = [];
+      scores = {};
+
+      for (let i = 1; i <= count; i++) {
+        const name = `Player ${i}`;
+        players.push(name);
+        scores[name] = 0;
+
+        const playerDiv = document.createElement('div');
+        playerDiv.className = 'player-container';
+        playerDiv.innerHTML = `
+          <h3>${name}</h3>
+          <p class="score" id="score-${name}">Score: $0</p>
+        `;
+        playersDiv.appendChild(playerDiv);
+      }
+
+      document.getElementById('gameControls').classList.remove('hidden');
+      generateBoard(false);
+    }
+
+    function updateScore(player, amount) {
+      scores[player] += amount;
+      const scoreElem = document.getElementById(`score-${player}`);
+      scoreElem.textContent = `Score: $${scores[player]}`;
+    }
+
+    function generateBoard(isDouble) {
+      const board = document.getElementById('board');
+      board.innerHTML = "";
+      document.getElementById('finalSection').classList.add('hidden');
+
+      const categories = getRandomCategories(allCategories, 6);
+      const values = isDouble ? [400, 800, 1200, 1600, 2000] : [200, 400, 600, 800, 1000];
+
+      const ddCol = Math.floor(Math.random() * 6);
+      const ddRow = Math.floor(Math.random() * 5);
+      dailyDouble = `${ddCol}-${ddRow}`;
+
+      categories.forEach(cat => {
+        const header = document.createElement('div');
+        header.className = 'cell category';
+        header.textContent = cat;
+        board.appendChild(header);
+      });
+
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 6; col++) {
+          const value = values[row];
+          const cell = document.createElement('div');
+          const key = `${col}-${row}`;
+          cell.className = 'cell';
+          cell.dataset.key = key;
+          cell.dataset.value = value;
+          cell.dataset.col = col;
+          cell.dataset.row = row;
+          cell.textContent = `$${value}`;
+
+          cell.onclick = () => {
+            if (cell.dataset.key === dailyDouble) {
+              cell.innerHTML = `<strong>DAILY DOUBLE!</strong>`;
+              cell.style.backgroundColor = "#FF4136";
+            } else {
+              const clue = `Clue: ${categories[col]} - $${value}`;
+              cell.innerHTML = `${clue}<br><br>` + players.map(player => `
+                <button onclick="updateScore('${player}', ${value})">✔ ${player}</button>
+                <button onclick="updateScore('${player}', -${value})">✖ ${player}</button>
+              `).join("<br>");
+            }
+            cell.onclick = null;
+          };
+          board.appendChild(cell);
+        }
+      }
+    }
+
+    function prepareFinalJeopardy() {
+      finalCategory = getRandomCategories(allCategories, 1)[0];
+      finalClue = `This is your Final Jeopardy clue in the category "${finalCategory}".`;
+
+      const wagerDiv = document.getElementById('wagerInputs');
+      wagerDiv.innerHTML = "";
+      players.forEach(player => {
+        wagerDiv.innerHTML += `
+          <div>
+            ${player} wager: $<input type="number" id="wager-${player}" min="0" max="${scores[player]}" value="0">
+          </div>
+        `;
+      });
+
+      document.getElementById('finalClue').classList.add('hidden');
+      document.getElementById('finalSection').classList.remove('hidden');
+    }
+
+    function revealFinalClue() {
+      const clueDiv = document.getElementById('finalClue');
+      clueDiv.classList.remove('hidden');
+      clueDiv.innerHTML = `
+        <h3>Final Jeopardy Category: ${finalCategory}</h3>
+        <p>${finalClue}</p>
+        <hr>
+        ${players.map(player => `
+          <button onclick="updateScore('${player}', parseInt(document.getElementById('wager-${player}').value || 0))">✔ ${player}</button>
+          <button onclick="updateScore('${player}', -parseInt(document.getElementById('wager-${player}').value || 0))">✖ ${player}</button>
+        `).join("<br><br>")}
+      `;
+    }
+  </script>
+</body>
+</html>
